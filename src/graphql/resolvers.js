@@ -108,7 +108,7 @@ const resolvers = {
       }
     },
 
-    // Note mutations
+    // Note mutation
     createNote: async (_, { input }) => {
       try {
         const newNote = new Note(input);
