@@ -3,6 +3,7 @@ const connectDB = require("./db");
 const typeDefs = require("./graphql/typeDefs");
 const resolvers = require("./graphql/resolvers");
 
+//db connection
 connectDB();
 
 const server = new ApolloServer({
