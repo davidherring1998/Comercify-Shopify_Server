@@ -8,10 +8,22 @@ const resolvers = {
     returnInventory: async () => {
       try {
         const inventory = await Inventory.find();
+
         if (!inventory || inventory.length === 0) {
           throw new Error("No inventory items found.");
         }
-        return inventory;
+
+        return inventory.map((item) => ({
+          id: item._id.toString(),
+          product_name: item.product_name,
+          product_status: item.product_status,
+          product_category: item.product_category,
+          product_location: item.product_location,
+          product_note: item.product_note,
+          product_cost: item.product_cost,
+          product_resell_value: item.product_resell_value,
+          product_count: item.product_count,
+        }));
       } catch (err) {
         console.error("Error fetching inventory:", err.message);
         throw new Error("Unable to fetch inventory items.");
@@ -55,8 +67,20 @@ const resolvers = {
           );
         }
         const newInventory = new Inventory(input);
+
         const savedInventory = await newInventory.save();
-        return savedInventory;
+
+        return {
+          id: savedInventory._id.toString(),
+          product_name: savedInventory.product_name,
+          product_status: savedInventory.product_status,
+          product_category: savedInventory.product_category,
+          product_location: savedInventory.product_location,
+          product_note: savedInventory.product_note,
+          product_cost: savedInventory.product_cost,
+          product_resell_value: savedInventory.product_resell_value,
+          product_count: savedInventory.product_count,
+        };
       } catch (error) {
         console.error("Error creating inventory:", error.message);
         throw new Error(
@@ -83,7 +107,17 @@ const resolvers = {
           throw new Error(`Inventory item not found for ID: ${id}`);
         }
 
-        return updatedInventory; 
+        return {
+          id: updatedInventory._id.toString(), // 🔥 Ensure ID is correctly formatted
+          product_name: updatedInventory.product_name,
+          product_status: updatedInventory.product_status,
+          product_category: updatedInventory.product_category,
+          product_location: updatedInventory.product_location,
+          product_note: updatedInventory.product_note,
+          product_cost: updatedInventory.product_cost,
+          product_resell_value: updatedInventory.product_resell_value,
+          product_count: updatedInventory.product_count,
+        };
       } catch (error) {
         console.error("Error editing inventory:", error);
         throw new Error("Unable to edit inventory item");
