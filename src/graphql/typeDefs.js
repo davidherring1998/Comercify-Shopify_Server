@@ -23,7 +23,7 @@ const typeDefs = gql`
     product_cost: Float
     product_resell_value: Float
     product_count: Int!
-  } 
+  }
 
   # Notes
   type Note {
@@ -49,13 +49,12 @@ const typeDefs = gql`
   type Mutation {
     createInventory(input: InventoryInput!): Inventory
     editInventory(id: ID!, input: InventoryInput!): Inventory
-    deleteInventoryItem(id: ID!): String
+    deleteInventoryItems(ids: [ID!]!): String
 
     createNote(input: NoteInput!): Note
     editNote(id: ID!, input: NoteInput!): Note
     deleteNote(id: ID!): String
   }
-
 `;
 
 module.exports = typeDefs;

@@ -126,16 +126,19 @@ const resolvers = {
 
     deleteInventoryItem: async (_, { id }) => {
       try {
-        if (!id) {
-          throw new Error("ID is required for editing an inventory item.");
-        }
-        const deletedInventory = await Inventory.findByIdAndDelete(id);
-
-        if (!deletedInventory) {
-          throw new Error("Inventory item not found.");
+        if (!ids || ids.length === 0) {
+          throw new Error("IDs are required to delete inventory items.");
         }
 
-        return `Inventory item with id ${id} has been deleted successfully.`;
+        const deletedInventory = await Inventory.deleteMany({
+          _id: { $in: ids },
+        });
+
+        if (!deletedInventory.deletedCount) {
+          throw new Error("No inventory items were deleted.");
+        }
+
+        return `Deleted ${deletedInventory.deletedCount} inventory items.`;
       } catch (error) {
         console.error("Error deleting inventory:", error.message);
         throw new Error("Unable to delete inventory item.");
