@@ -124,7 +124,7 @@ const resolvers = {
       }
     },
 
-    deleteInventoryItem: async (_, { id }) => {
+    deleteInventoryItems: async (_, { id }) => {
       try {
         if (!ids || ids.length === 0) {
           throw new Error("IDs are required to delete inventory items.");
